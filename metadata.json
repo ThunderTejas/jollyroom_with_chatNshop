@@ -1,0 +1,5 @@
+{
+  "name": "Jollyroom UI Clone with Chat 'n Shop",
+  "description": "A frontend clone of the Jollyroom e-commerce website, featuring a 'Chat 'n Shop' functionality powered by the Gemini API for an interactive shopping assistant experience.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,101 @@
+import React from 'react';
+import { CheckIcon, SearchIcon, UserIcon, HeartIcon, BagIcon } from './Icons';
+
+interface HeaderProps {
+    cartItemCount: number;
+    onCartClick: () => void;
+}
+
+const TopBar = () => (
+  <div className="bg-[#fff0f5] text-sm text-gray-800 py-2">
+    <div className="container mx-auto px-6 lg:px-32 flex justify-center items-center space-x-4 md:space-x-8">
+      <div className="flex items-center space-x-1">
+        <CheckIcon />
+        <span>Price Guarantee</span>
+      </div>
+      <div className="flex items-center space-x-1">
+        <CheckIcon />
+        <span>Free Shipping on orders over $100</span>
+      </div>
+      <div className="flex items-center space-x-1">
+        <CheckIcon />
+        <span>365-Day Returns</span>
+      </div>
+    </div>
+  </div>
+);
+
+// FIX: Update MainHeader props to accept cartItemCount and destructure it.
+const MainHeader: React.FC<{ onCartClick: () => void; cartItemCount: number | string }> = ({ onCartClick, cartItemCount }) => (
+  <div className="border-b">
+    <div className="container mx-auto px-6 lg:px-32 py-6 flex justify-between items-center space-x-6">
+      {/* Logo on the left */}
+      <div className="flex-1">
+        <h1 className="text-[2.75rem] font-bold text-[#e52e8d]" style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900 }}>jollyroom.</h1>
+        <p className="text-sm text-gray-500 tracking-wider">The Nordics' largest children's & baby store</p>
+      </div>
+
+      {/* Search bar in the middle */}
+      <div className="flex-1 flex justify-center">
+        <div className="hidden lg:block relative w-full max-w-lg">
+          <input type="text" placeholder="Hey, what are you looking for?" className="w-full bg-gray-100 border border-gray-200 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-pink-300" />
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+            <SearchIcon />
+          </div>
+        </div>
+      </div>
+
+      {/* Icons and Customer Service on the right */}
+      <div className="flex-1 flex justify-end items-center space-x-6">
+        <a href="#" className="hidden md:block text-gray-600 hover:text-pink-500">Customer Service</a>
+        <div className="flex items-center space-x-3">
+          <button aria-label="Account"><UserIcon /></button>
+          <button aria-label="Wishlist"><HeartIcon /></button>
+          <button onClick={onCartClick} aria-label="Cart" className="relative">
+            <BagIcon />
+            {/* FIX: Use parseInt to safely check cartItemCount which can be a number or string like '9+' */}
+            {parseInt(String(cartItemCount), 10) > 0 && (
+              <span className="absolute -top-1 -right-2 bg-pink-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const NavBar = () => {
+  const navItems = [
+    'News', 'Mid Season', 'Presents', 'Toys', 'Children\'s Clothing', 'Children\'s Shoes',
+    'Prams', 'Car seats', 'The Children\'s Room', 'Baby Products', 'Mama', 'Sport',
+    'Leisure & Hobbies', 'Guides', 'Brands'
+  ];
+  return (
+    <nav className="hidden md:block shadow-sm">
+      <div className="container mx-auto px-6 lg:px-32">
+        <ul className="flex justify-center items-center space-x-6 py-3 overflow-x-auto whitespace-nowrap">
+          {navItems.map(item => (
+            <li key={item}>
+              <a href="#" className="text-gray-700 font-medium hover:text-pink-500 transition-colors duration-200">{item}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) => {
+    const totalItems = cartItemCount > 9 ? '9+' : cartItemCount;
+    return (
+      <header className="bg-white sticky top-0 z-40">
+        <TopBar />
+        <MainHeader onCartClick={onCartClick} cartItemCount={totalItems} />
+        <NavBar />
+      </header>
+    );
+};
+
+export default Header;
