@@ -64,7 +64,7 @@ const App: React.FC = () => {
             <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartPanelOpen(true)} />
             <main className="flex-grow">
                 <Hero />
-                <ProductGrid />
+                <ProductGrid onAddToCart={handleAddToCart} />
             </main>
             <Footer />
             <StickyTab onClick={() => setIsSupportPanelOpen(true)} />

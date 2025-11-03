@@ -5,9 +5,10 @@ import StarRating from './StarRating';
 
 interface ProductCardProps {
     product: ProductInfo;
+    onAddToCart: (product: ProductInfo) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     const { 
         imageUrl, 
         name, 
@@ -72,6 +73,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                            Orig. price: <span className="line-through">${originalPrice}</span>
                         </p>
                     )}
+                </div>
+
+                <div className="mt-3">
+                    <button
+                        onClick={() => onAddToCart(product)}
+                        className="w-full bg-pink-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-pink-600 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                        aria-label={`Add ${name} to cart`}
+                    >
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </div>

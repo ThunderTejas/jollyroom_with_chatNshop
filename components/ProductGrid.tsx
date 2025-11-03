@@ -5,7 +5,7 @@ import { ProductInfo } from '../types';
 export const products: ProductInfo[] = [
     {
         id: 1,
-        imageUrl: 'https://images.unsplash.com/photo-1572200216592-4458593883a3?q=80&w=600&auto=format&fit=crop',
+        imageUrl: 'https://www.jollyroom.no/storage/66A0C88F8E6BA634F01B1C20F80E71991CBFB9BB38FA5BA120C620FEF58A2E22/0005408b9a7a404286414c0e97f6391e/jpg/media/5bf4d2fcfb084442808e31b259323019/503825-I13-1356_5.jpg',
         category: 'Kids\' Clothing',
         name: 'Didriksons Lun Winter Jacket',
         subtitle: 'Rusty Wine',
@@ -22,7 +22,7 @@ export const products: ProductInfo[] = [
     },
     {
         id: 2,
-        imageUrl: 'https://images.unsplash.com/photo-1604163554228-2d27c64a7549?q=80&w=600&auto=format&fit=crop',
+        imageUrl: 'https://streams.frend.dev/image/v1?url=https://vikingfootwear.centracdn.net/client/dynamic/images/735_edd834ed76-5-25100-4803-c-1350x0.jpg&width=3840&quality=80',
         category: 'Kids\' Shoes',
         name: 'Viking Ultra Lined Rubber Boots',
         subtitle: 'Grape/Grey',
@@ -39,7 +39,7 @@ export const products: ProductInfo[] = [
     },
     {
         id: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=600&auto=format&fit=crop',
+        imageUrl: 'https://www.jollyroom.no/storage/07145EBE41602B37619E245FEB68371DAC7F9F3CE1BB7B718D8492D51FC670F7/f144e00c4aba43c4b3143b22b86edcbc/337-450-0-jpg.Jpeg/media/50714be2d72144c7b3cc617938f44837/119263-009-4300_1.jpeg',
         category: 'Kids\' Shoes',
         name: 'Nordbjörn Snowfall Winter boots',
         subtitle: 'Navy',
@@ -56,7 +56,7 @@ export const products: ProductInfo[] = [
     },
     {
         id: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1616451030029-715a82274135?q=80&w=600&auto=format&fit=crop',
+        imageUrl: 'https://cdn.shopify.com/s/files/1/0690/7111/0431/files/5100117C-8680_zoom_12.jpg?v=1760606383&width=1536&quality=75&format=pjpg',
         category: 'Strollers',
         name: 'Voksi Urban Travel Bag',
         subtitle: 'Meadow Green Wings',
@@ -73,7 +73,7 @@ export const products: ProductInfo[] = [
     },
     {
         id: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1611833045582-2a25592f6944?q=80&w=600&auto=format&fit=crop',
+        imageUrl: 'https://www.fjellsport.no/assets/blobs/didriksons-aw2025-kids-a7r0370-1x1-c252-09949a42ed.jpeg?preset=tiny&dpr=2',
         category: 'Kids\' Clothing',
         name: 'Reimatec Gotland Overall',
         subtitle: 'Green Clay',
@@ -104,14 +104,18 @@ export const products: ProductInfo[] = [
     }))
 ];
 
-const ProductGrid: React.FC = () => {
+interface ProductGridProps {
+    onAddToCart: (product: ProductInfo) => void;
+}
+
+const ProductGrid: React.FC<ProductGridProps> = ({ onAddToCart }) => {
     return (
         <section className="bg-white py-12">
             <div className="container mx-auto px-4 lg:px-8">
                 <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Featured Products</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                     {products.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
                     ))}
                 </div>
             </div>
