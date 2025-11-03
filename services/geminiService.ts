@@ -1,9 +1,9 @@
 import { GoogleGenAI, Chat, GenerateContentResponse, Type } from "@google/genai";
 import { ProductInfo } from '../types';
-import { products } from '../components/ProductGrid';
 
-let ai: GoogleGenAI | null = null;
-let chat: Chat | null = null;
+
+
+
 
 export interface GeminiResponse {
     text: string;
@@ -33,11 +33,11 @@ const responseSchema = {
 };
 
 
-const initializeChat = (): Chat => {
+const initializeChat = (products: ProductInfo[]): Chat => {
     if (!process.env.API_KEY) {
         throw new Error("The Chat 'n Shop feature requires a Gemini API key. Please set the API_KEY environment variable to enable it.");
     }
-    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
     const productCatalog = JSON.stringify(products, null, 2);
     const systemInstruction = `You are 'Chat 'n Shop', a friendly and helpful shopping assistant for Jollyroom, a children's and baby products store.
@@ -62,11 +62,9 @@ ${productCatalog}
     });
 };
 
-export const sendMessageToGemini = async (message: string): Promise<GeminiResponse> => {
+export const sendMessageToGemini = async (message: string, products: ProductInfo[]): Promise<GeminiResponse> => {
     try {
-        if (!chat) {
-            chat = initializeChat();
-        }
+        const chat = initializeChat(products);
 
         const result: GenerateContentResponse = await chat.sendMessage({ message });
         const jsonText = result.text.trim();

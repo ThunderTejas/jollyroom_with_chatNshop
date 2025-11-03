@@ -10,6 +10,7 @@ import SupportPanel from './components/SupportPanel';
 import CartPanel from './components/CartPanel';
 import ThankYouPage from './components/ThankYouPage';
 import { CartItem, ProductInfo } from './types';
+import { products } from './products';
 
 const App: React.FC = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -93,6 +94,7 @@ const App: React.FC = () => {
                 isOpen={isChatOpen} 
                 onClose={() => setIsChatOpen(false)} 
                 onAddToCart={handleAddToCart}
+                products={products}
             />
         </div>
     );

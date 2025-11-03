@@ -1,4 +1,5 @@
 import React from 'react';
+import useHideOnScroll from '../hooks/useHideOnScroll';
 import { CheckIcon, SearchIcon, UserIcon, HeartIcon, BagIcon } from './Icons';
 
 interface HeaderProps {
@@ -68,9 +69,9 @@ const MainHeader: React.FC<{ onCartClick: () => void; cartItemCount: number | st
 
 const NavBar = () => {
   const navItems = [
-    'News', 'Mid Season', 'Presents', 'Toys', 'Children\'s Clothing', 'Children\'s Shoes',
+    'News', 'Presents', 'Toys', 'Children\'s Clothing', 'Children\'s Shoes',
     'Prams', 'Car seats', 'The Children\'s Room', 'Baby Products', 'Mama', 'Sport',
-    'Leisure & Hobbies', 'Guides', 'Brands'
+    'Leisure & Hobbies'
   ];
   return (
     <nav className="hidden md:block shadow-sm">
@@ -78,7 +79,7 @@ const NavBar = () => {
         <ul className="flex justify-center items-center space-x-6 py-3 overflow-x-auto whitespace-nowrap">
           {navItems.map(item => (
             <li key={item}>
-              <a href="#" className="text-gray-700 font-medium hover:text-pink-500 transition-colors duration-200">{item}</a>
+              <a href="#" className="text-gray-700 font-small hover:text-pink-500 transition-colors duration-200">{item}</a>
             </li>
           ))}
         </ul>
@@ -89,8 +90,14 @@ const NavBar = () => {
 
 const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) => {
     const totalItems = cartItemCount > 9 ? '9+' : cartItemCount;
+    const hidden = useHideOnScroll();
+
     return (
-      <header className="bg-white sticky top-0 z-40">
+      <header
+        // keep the header in the flow (sticky) and perform visual hide using transform
+        className={`bg-white sticky top-0 z-40 transform transition-transform duration-300 ease-in-out ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
+        aria-hidden={hidden}
+      >
         <TopBar />
         <MainHeader onCartClick={onCartClick} cartItemCount={totalItems} />
         <NavBar />

@@ -8,9 +8,10 @@ interface ChatModalProps {
     isOpen: boolean;
     onClose: () => void;
     onAddToCart: (product: ProductInfo) => void;
+    products: ProductInfo[];
 }
 
-const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, onAddToCart }) => {
+const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, onAddToCart, products }) => {
     const isApiKeySet = !!process.env.API_KEY;
 
     const initialMessage: ChatMessage = isApiKeySet
@@ -45,7 +46,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, onAddToCart }) =
         setIsLoading(true);
 
         try {
-            const { text, product } = await sendMessageToGemini(input);
+            const { text, product } = await sendMessageToGemini(input, products);
             const modelMessage: ChatMessage = { role: 'model', text, product };
             setMessages(prev => [...prev, modelMessage]);
         } catch (error) {

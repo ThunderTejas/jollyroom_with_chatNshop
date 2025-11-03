@@ -1,4 +1,5 @@
 import React from 'react';
+import useScrollFadeUp from '../hooks/useScrollFadeUp';
 import { StarIcon } from './Icons';
 
 const PromoBubble = ({ text, color, position }: { text: string; color: string; position: string }) => (
@@ -8,16 +9,25 @@ const PromoBubble = ({ text, color, position }: { text: string; color: string; p
 );
 
 const Hero = () => {
+    const { ref, style } = useScrollFadeUp();
+
     return (
-        <div className="relative w-full h-[70vh] md:h-[85vh] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1605599043329-195a62e3e57f?q=80&w=1920&auto=format&fit=crop')" }}>
+        <div
+            ref={ref as any}
+            className="relative w-full h-[70vh] md:h-[85vh] bg-cover bg-center bg-no-repeat"
+            style={{
+                ...style,
+                backgroundImage: "url('https://www.jollyroom.de/storage/FECC836BC48DDD5CE51D03EB483853CC47615ACC0BD030684DD2E2B9A46BD14F/b9f1032e5344448cad983493b176a827/jpg/media/696abbafa05a42cbae0809934540a43c/v42_Slide_Startsida_banner_1920x700_WinterShop_DEAT.jpg')",
+            }}
+        >
             <div className="container mx-auto px-6 h-full relative">
                 
                 {/* Promo Bubbles Area */}
-                <div className="absolute top-1/4 left-0 md:left-10 w-1/3 h-1/2">
+                {/* <div className="absolute top-1/4 left-0 md:left-10 w-1/3 h-1/2">
                     <PromoBubble text="New!" color="bg-pink-400" position="top-0 left-10" />
                     <PromoBubble text="Hot Deals!" color="bg-indigo-600" position="top-24 left-0 md:left-[-2rem]" />
                     <PromoBubble text="Best in Test" color="bg-blue-500" position="top-20 left-24 md:left-32" />
-                </div>
+                </div> */}
                 
                 {/* Main Text Area */}
                 <div className="absolute inset-0 flex flex-col justify-center items-end text-right pr-4 md:pr-12">
