@@ -35,7 +35,7 @@ const responseSchema = {
 
 const initializeChat = (): Chat => {
     if (!process.env.API_KEY) {
-        throw new Error("API_KEY environment variable not set");
+        throw new Error("The Chat 'n Shop feature requires a Gemini API key. Please set the API_KEY environment variable to enable it.");
     }
     ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -88,7 +88,7 @@ export const sendMessageToGemini = async (message: string): Promise<GeminiRespon
         if (error instanceof SyntaxError) {
              errorMessage = "Sorry, I received an unexpected response format. Could you try asking in a different way?";
         } else if (error instanceof Error) {
-            errorMessage = `An error occurred: ${error.message}`;
+            errorMessage = error.message;
         }
         return { text: errorMessage, product: null };
     }

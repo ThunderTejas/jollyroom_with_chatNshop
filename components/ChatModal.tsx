@@ -11,9 +11,13 @@ interface ChatModalProps {
 }
 
 const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, onAddToCart }) => {
-    const [messages, setMessages] = useState<ChatMessage[]>([
-        { role: 'model', text: "Hi! I'm your shopping assistant. How can I help you find the perfect items for your little ones today?", product: null }
-    ]);
+    const isApiKeySet = !!process.env.API_KEY;
+
+    const initialMessage: ChatMessage = isApiKeySet
+        ? { role: 'model', text: "Hi! I'm your shopping assistant. How can I help you find the perfect items for your little ones today?", product: null }
+        : { role: 'model', text: "Welcome to Chat 'n Shop! To get started, please configure your Gemini API key. You'll need to set the `API_KEY` environment variable for this feature to work.", product: null };
+
+    const [messages, setMessages] = useState<ChatMessage[]>([initialMessage]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -22,11 +26,18 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, onAddToCart }) =
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    useEffect(() => {
+        if (isOpen) {
+            // Reset to initial message when modal is opened, in case API key status changes.
+            setMessages([initialMessage]);
+        }
+    }, [isOpen]);
+
     useEffect(scrollToBottom, [messages]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (!input.trim() || isLoading) return;
+        if (!input.trim() || isLoading || !isApiKeySet) return;
 
         const userMessage: ChatMessage = { role: 'user', text: input, product: null };
         setMessages(prev => [...prev, userMessage]);
@@ -60,7 +71,13 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, onAddToCart }) =
                 <main className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                            <div className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded-2xl ${msg.role === 'user' ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-800'}`}>
+                            <div className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded-2xl ${
+                                msg.role === 'user' 
+                                    ? 'bg-pink-500 text-white' 
+                                    : (index === 0 && !isApiKeySet)
+                                        ? 'bg-amber-100 text-amber-900 border border-amber-200'
+                                        : 'bg-gray-200 text-gray-800'
+                            }`}>
                                 <p className="whitespace-pre-wrap">{msg.text}</p>
                                 {msg.role === 'model' && msg.product && (
                                     <ChatProductCard product={msg.product} onAddToCart={onAddToCart} />
@@ -88,11 +105,11 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, onAddToCart }) =
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            placeholder="Ask about products..."
-                            className="flex-1 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400"
-                            disabled={isLoading}
+                            placeholder={isApiKeySet ? "Ask about products..." : "API key not configured"}
+                            className="flex-1 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 disabled:bg-gray-200 disabled:cursor-not-allowed"
+                            disabled={isLoading || !isApiKeySet}
                         />
-                        <button type="submit" disabled={isLoading || !input.trim()} className="bg-pink-500 text-white p-3 rounded-full hover:bg-pink-600 disabled:bg-pink-300 disabled:cursor-not-allowed transition-colors">
+                        <button type="submit" disabled={isLoading || !input.trim() || !isApiKeySet} className="bg-pink-500 text-white p-3 rounded-full hover:bg-pink-600 disabled:bg-pink-300 disabled:cursor-not-allowed transition-colors">
                            <SendIcon />
                         </button>
                     </form>
