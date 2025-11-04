@@ -1,10 +1,12 @@
 import React from 'react';
 import useHideOnScroll from '../hooks/useHideOnScroll';
+import MainIcon from '../public/icon.png';
 import { CheckIcon, SearchIcon, UserIcon, HeartIcon, BagIcon } from './Icons';
 
 interface HeaderProps {
-    cartItemCount: number;
-    onCartClick: () => void;
+  cartItemCount: number;
+  onCartClick: () => void;
+  onChatClick?: () => void;
 }
 
 const TopBar = () => (
@@ -27,7 +29,7 @@ const TopBar = () => (
 );
 
 // FIX: Update MainHeader props to accept cartItemCount and destructure it.
-const MainHeader: React.FC<{ onCartClick: () => void; cartItemCount: number | string }> = ({ onCartClick, cartItemCount }) => (
+const MainHeader: React.FC<{ onCartClick: () => void; cartItemCount: number | string; onChatClick?: () => void }> = ({ onCartClick, cartItemCount, onChatClick }) => (
   <div className="border-b">
     <div className="container mx-auto px-6 lg:px-32 py-6 flex justify-between items-center space-x-6">
       {/* Logo on the left */}
@@ -48,7 +50,16 @@ const MainHeader: React.FC<{ onCartClick: () => void; cartItemCount: number | st
 
       {/* Icons and Customer Service on the right */}
       <div className="flex-1 flex justify-end items-center space-x-6">
-        <a href="#" className="hidden md:block text-gray-600 hover:text-pink-500">Customer Service</a>
+        <button
+          onClick={onChatClick}
+          aria-label="Open chat"
+          className="inline-flex items-center gap-2 text-white rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-pink-300"
+        >
+          <span className="sr-only">Open chat</span>
+          <div className="bg-black p-1 rounded-full shadow-lg transform scale-110 transition-all duration-200 hover:scale-110 overflow-hidden flex items-center justify-center">
+            <img src={MainIcon} alt="Chat" className="h-16 w-16 object-contain" />
+          </div>
+        </button>
         <div className="flex items-center space-x-3">
           <button aria-label="Account"><UserIcon /></button>
           <button aria-label="Wishlist"><HeartIcon /></button>
@@ -88,7 +99,7 @@ const NavBar = () => {
   );
 };
 
-const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) => {
+const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onChatClick }) => {
     const totalItems = cartItemCount > 9 ? '9+' : cartItemCount;
     const hidden = useHideOnScroll();
 
@@ -99,7 +110,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) => {
         aria-hidden={hidden}
       >
         <TopBar />
-        <MainHeader onCartClick={onCartClick} cartItemCount={totalItems} />
+        <MainHeader onCartClick={onCartClick} cartItemCount={totalItems} onChatClick={onChatClick} />
         <NavBar />
       </header>
     );

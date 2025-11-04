@@ -3,7 +3,6 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import StickyTab from './components/StickyTab';
 import ChatModal from './components/ChatModal';
-import { ChatIcon } from './components/Icons';
 import ProductGrid from './components/ProductGrid';
 import Footer from './components/Footer';
 import SupportPanel from './components/SupportPanel';
@@ -62,7 +61,7 @@ const App: React.FC = () => {
 
     return (
         <div className="relative min-h-screen font-sans flex flex-col">
-            <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartPanelOpen(true)} />
+            <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartPanelOpen(true)} onChatClick={() => setIsChatOpen(true)} />
             <main className="flex-grow">
                 <Hero />
                 <ProductGrid onAddToCart={handleAddToCart} />
@@ -81,14 +80,7 @@ const App: React.FC = () => {
                 onCheckout={handleCheckout}
             />
 
-            {/* Chat 'n Shop Floating Action Button */}
-            <button
-                onClick={() => setIsChatOpen(true)}
-                className="fixed bottom-6 right-6 bg-[#e52e8d] text-white p-4 rounded-full shadow-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 z-40 transition-transform hover:scale-110"
-                aria-label="Open Chat 'n Shop"
-            >
-                <ChatIcon />
-            </button>
+            {/* Floating chat button removed — header now provides chat trigger */}
             
             <ChatModal 
                 isOpen={isChatOpen} 
