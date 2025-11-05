@@ -1,6 +1,5 @@
 import React from 'react';
 import useHideOnScroll from '../hooks/useHideOnScroll';
-import MainIcon from '../public/icon.png';
 import { CheckIcon, SearchIcon, UserIcon, HeartIcon, BagIcon } from './Icons';
 
 interface HeaderProps {
@@ -53,11 +52,12 @@ const MainHeader: React.FC<{ onCartClick: () => void; cartItemCount: number | st
         <button
           onClick={onChatClick}
           aria-label="Open chat"
-          className="inline-flex items-center gap-2 text-white rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-pink-300"
+          className="inline-flex items-center gap-2 text-white rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-peach-300"
         >
           <span className="sr-only">Open chat</span>
-          <div className="bg-black p-1 rounded-full shadow-lg transform scale-110 transition-all duration-200 hover:scale-110 overflow-hidden flex items-center justify-center">
-            <img src={MainIcon} alt="Chat" className="h-16 w-16 object-contain" />
+          {/* pill-shaped chat button to show horizontal logo */}
+          <div className="bg-[#FFB6D9] px-12 py-1.5 rounded-md shadow-lg transform scale-105 transition-all duration-200 hover:scale-110 overflow-hidden flex items-center justify-center">
+            <img src="/new_icon.png" alt="Chat" className="h-12 w-auto max-w-[200px] object-contain brightness-90 saturate-200 hue-rotate-[200deg] scale-150 transition-transform" />
           </div>
         </button>
         <div className="flex items-center space-x-3">
