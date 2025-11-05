@@ -56,8 +56,8 @@ const MainHeader: React.FC<{ onCartClick: () => void; cartItemCount: number | st
         >
           <span className="sr-only">Open chat</span>
           {/* pill-shaped chat button to show horizontal logo */}
-          <div className="bg-[#FFB6D9] px-12 py-1.5 rounded-md shadow-lg transform scale-105 transition-all duration-200 hover:scale-110 overflow-hidden flex items-center justify-center">
-            <img src="/new_icon.png" alt="Chat" className="h-12 w-auto max-w-[200px] object-contain brightness-90 saturate-200 hue-rotate-[200deg] scale-150 transition-transform" />
+          <div className="px-5 py-1.5 rounded-md shadow-lg transform scale-105 transition-all duration-200 hover:scale-110 overflow-hidden flex items-center justify-center">
+            <img src="/icon8.png" alt="Chat" className="h-12 w-auto max-w-[200px] object-contain scale-150 transition-transform" style={{ filter: 'brightness(1.3) saturate(1.3) hue-rotate(350deg)' }} />
           </div>
         </button>
         <div className="flex items-center space-x-3">
