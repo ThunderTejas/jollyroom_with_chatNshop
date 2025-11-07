@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import useHideOnScroll from '../hooks/useHideOnScroll';
 import { CheckIcon, SearchIcon, UserIcon, HeartIcon, BagIcon } from './Icons';
 
@@ -67,7 +67,7 @@ const MainHeader: React.FC<{
             onClick={onChatClick}
             aria-label="Open Chat N'Shop"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[#e52e8d]
-                       h-[41.6px] w-[210px] px-4 shadow-sm hover:shadow-md transition-[box-shadow,transform]
+                       h-[41.6px] w-[170px] px-4 shadow-sm hover:shadow-md transition-[box-shadow,transform]
                        duration-150 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-pink-200"
           >
             {/* Logo inside pink circle with enlarged internal image */}
